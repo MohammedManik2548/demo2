@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_users/bloc/git_user_event.dart';
-import 'package:github_users/bloc/git_user_state.dart';
+import 'package:github_users/bloc/git_user_bloc/git_user_event.dart';
+import 'package:github_users/bloc/git_user_bloc/git_user_state.dart';
 import 'package:github_users/data/model/Items.dart';
-import '../data/repositories/git_user_repository.dart';
+import '../../data/repositories/git_user_repository.dart';
 
 class GitUserBloc extends Bloc<GitUserEvent, GitUserState>{
   final GitUserRepository gitUserRepository;

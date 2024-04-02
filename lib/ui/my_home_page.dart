@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:github_users/bloc/git_user_bloc.dart';
-import 'package:github_users/bloc/git_user_event.dart';
-import 'package:github_users/bloc/git_user_state.dart';
+import 'package:github_users/bloc/git_user_bloc/git_user_state.dart';
 import 'package:github_users/data/repositories/git_user_repository.dart';
 import 'package:github_users/elements/error.dart';
+import 'package:github_users/elements/list.dart';
 import 'package:github_users/elements/loading.dart';
+import '../bloc/git_user_bloc/git_user_bloc.dart';
+import '../bloc/git_user_bloc/git_user_event.dart';
+import 'details_page.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -17,7 +19,10 @@ class MyHomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
-          title: Text('GitHub User'),
+          title: Text(
+              'GitHub User',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: BlocBuilder<GitUserBloc, GitUserState>(
           builder: (context, state){
@@ -29,14 +34,7 @@ class MyHomePage extends StatelessWidget {
               return buildLoading();
             }else if(state is GitUserLoadedState){
               print('loaded state');
-              return ListView.builder(
-                itemCount: state.items.length,
-                  itemBuilder: (context, index){
-                    return ListTile(
-                      title: Text(state.items[index].title.toString()),
-                    );
-                  }
-              );
+              return buildList(state.items);
             }else if(state is GitUserErrorState){
               print('error state');
               return buildError(state.message);
