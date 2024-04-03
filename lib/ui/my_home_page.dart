@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_users/bloc/git_user_bloc/git_user_state.dart';
 import 'package:github_users/data/repositories/git_user_repository.dart';
-import 'package:github_users/elements/error.dart';
-import 'package:github_users/elements/loading.dart';
+import 'package:github_users/widget/my_drawer.dart';
 import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/git_user_bloc/git_user_bloc.dart';
 import '../bloc/git_user_bloc/git_user_event.dart';
 import '../data/model/Items.dart';
+import '../widget/error.dart';
+import '../widget/loading.dart';
 import 'details_page.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,6 +17,7 @@ class MyHomePage extends StatelessWidget {
   final scrollController = ScrollController();
   int currentMax =10;//
 
+  static const routeName = 'home_page';
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +27,15 @@ class MyHomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
           title: Text(
               'GitHub User',
             style: TextStyle(color: Colors.white),
           ),
         ),
+        drawer: MyDrawer(),
         body: BlocBuilder<GitUserBloc, GitUserState>(
           builder: (context, state){
 

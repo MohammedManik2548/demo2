@@ -7,11 +7,12 @@ import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/details_page_bloc/details_page_event.dart';
 import '../data/model/Items.dart';
 import '../data/model/gitHub_rep_model/gitGub_rep_model.dart';
-import '../elements/utils/utils.dart';
+import '../utils/utils.dart';
 
 class DetailsPage extends StatelessWidget {
   DetailsBloc detailsBloc;
   DetailsPage({super.key, required this.detailsBloc});
+  static const routeName = 'details_page';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class DetailsPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.purple,
             iconTheme: IconThemeData(
-              color: Colors.white, //change your color here
+              color: Colors.white,
             ),
             title: Text(
               'Details Page',
@@ -73,16 +74,12 @@ class DetailsPage extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        state.gitHubRepoList[index].description ??
-                                            '',
+                                        state.gitHubRepoList[index].description ?? '',
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        Utils.dateFormatDash(state
-                                                .gitHubRepoList[index]
-                                                .createdAt ??
-                                            ''),
+                                        Utils.dateFormatDash(state.gitHubRepoList[index].createdAt ?? ''),
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
