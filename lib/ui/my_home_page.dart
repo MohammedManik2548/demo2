@@ -14,7 +14,7 @@ import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatelessWidget {
 
-  final scrollController = ScrollController();
+  // final scrollController = ScrollController();
   int currentMax =10;//
 
   static const routeName = 'home_page';
@@ -62,20 +62,20 @@ class MyHomePage extends StatelessWidget {
 
   Widget _buildList(BuildContext context,List<Items> items){
     // items = List.generate(10, (i) => items[i]);
-    items = List.generate(10, (index) => items[index]);
+    // items = List.generate(10, (index) => items[index]);
 
-    scrollController.addListener(() {
-      if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
-        for(int i =currentMax; i<currentMax+10; i++){
-                  items.add(items[i]);
-        }
-                currentMax = currentMax +10;
-        print('call');
-        // BlocProvider.of<GitUserBloc>(context).gitUserRepository.getGitUsers();
-      }else{
-        print("Don't call");
-      }
-    });
+    // scrollController.addListener(() {
+    //   if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+    //     for(int i =currentMax; i<currentMax+10; i++){
+    //               items.add(items[i]);
+    //     }
+    //             currentMax = currentMax +10;
+    //     print('call');
+    //     // BlocProvider.of<GitUserBloc>(context).gitUserRepository.getGitUsers();
+    //   }else{
+    //     print("Don't call");
+    //   }
+    // });
     // int currentMax =11;
     //
     //       for(int i =currentMax; i<currentMax+12; i++){
@@ -83,11 +83,12 @@ class MyHomePage extends StatelessWidget {
     //       }
     //       currentMax = currentMax +12;
     return ListView.builder(
-        controller: scrollController,
+        controller: context.read<GitUserBloc>().scrollController,
         itemExtent: 70,
-        itemCount: items.length+1,
+        itemCount: context.read<GitUserBloc>().isLoadingMore
+        ? items.length + 1: items.length,
         itemBuilder: (context, index){
-          if(index == items.length){
+          if(index > items.length){
             return buildLoading();
           }
           return InkWell(
@@ -120,5 +121,4 @@ class MyHomePage extends StatelessWidget {
         }
     );
   }
-
 }

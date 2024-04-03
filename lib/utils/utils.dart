@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 class Utils{
+
+
   static String dateFormatHyphen(String substring) {
     var  finalDateToFormat="";
     try{
@@ -19,6 +21,7 @@ class Utils{
       return substring;
     }
   }
+
   static String dateFormatDash(String substring) {
     var  finalDateToFormat="";
     try{

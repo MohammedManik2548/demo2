@@ -7,3 +7,8 @@ class FetchGitUserEvent extends GitUserEvent{
   List<Object?> get props => [];
 
 }
+class FetchGitUserMoreEvent extends GitUserEvent{
+  @override
+  List<Object?> get props => [];
+
+}
