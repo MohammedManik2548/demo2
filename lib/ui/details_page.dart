@@ -7,90 +7,100 @@ import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/details_page_bloc/details_page_event.dart';
 import '../data/model/Items.dart';
 import '../data/model/gitHub_rep_model/gitGub_rep_model.dart';
+import '../elements/utils/utils.dart';
 
 class DetailsPage extends StatelessWidget {
   DetailsBloc detailsBloc;
-   DetailsPage({super.key, required this.detailsBloc});
+  DetailsPage({super.key, required this.detailsBloc});
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
-      create: (context)=> DetailsBloc(detailsRepository: DetailsRepositoryImpl())..add(FetchDetailsEvent()),
+      create: (context) =>
+          DetailsBloc(detailsRepository: DetailsRepositoryImpl())
+            ..add(FetchDetailsEvent()),
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
-          ),
-          title: Text(
+          appBar: AppBar(
+            backgroundColor: Colors.purple,
+            iconTheme: IconThemeData(
+              color: Colors.white, //change your color here
+            ),
+            title: Text(
               'Details Page',
-            style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-        ),
-        body: BlocBuilder<DetailsBloc, DetailsState>(
-          builder: (context, state){
-            if(state is DetailLoading){
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }else if(state is DetailsLoaded){
-              return ListView.builder(
-                itemCount: state.gitHubRepoList.length,
-                  itemBuilder: (context, index){
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Card(
-                      child: ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            state.gitHubRepoList[index].owner!.avatarUrl??''
+          body: BlocBuilder<DetailsBloc, DetailsState>(
+            builder: (context, state) {
+              if (state is DetailLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is DetailsLoaded) {
+                return ListView.builder(
+                    itemCount: state.gitHubRepoList.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.network(
+                                    state.gitHubRepoList[index].owner!
+                                            .avatarUrl ??
+                                        '',
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: ListTile(
+                                  title: Text(
+                                    state.gitHubRepoList[index].name ?? '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        state.gitHubRepoList[index].description ??
+                                            '',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        Utils.dateFormatDash(state
+                                                .gitHubRepoList[index]
+                                                .createdAt ??
+                                            ''),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        title: Text(
-                            state.gitHubRepoList[index].name??'',
-                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                        ),
-                        subtitle: Text(
-                            state.gitHubRepoList[index].createdAt??'',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  );
-                    // return Padding(
-                    //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    //   child: Column(
-                    //     children: [
-                    //       ClipRRect(
-                    //         borderRadius: BorderRadius.circular(25),
-                    //         child: Container(
-                    //           color: Colors.red,
-                    //           child: Image.network(
-                    //             state.gitHubRepoList[index].owner!.avatarUrl??'',
-                    //             // height: 280,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       const SizedBox(height: 20),
-                    //       Text(
-                    //         state.gitHubRepoList[index].name.toString(),
-                    //         style: TextStyle(
-                    //             fontSize: 26,
-                    //             fontWeight: FontWeight.w600
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // );
-                  }
-              );
-            }
-            return Container();
-          },
-        )
-      ),
+                      );
+                    });
+              }
+              return Container();
+            },
+          )),
     );
   }
 }
