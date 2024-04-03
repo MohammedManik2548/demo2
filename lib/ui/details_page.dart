@@ -10,8 +10,8 @@ import '../data/model/gitHub_rep_model/gitGub_rep_model.dart';
 import '../utils/utils.dart';
 
 class DetailsPage extends StatelessWidget {
-  DetailsBloc detailsBloc;
-  DetailsPage({super.key, required this.detailsBloc});
+  DetailsBloc? detailsBloc;
+  DetailsPage({super.key, this.detailsBloc});
   static const routeName = 'details_page';
 
   @override

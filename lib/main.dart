@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: MyHomePage(),
-        onGenerateRoute: appRoute.onGenerateRoute(context),
+        onGenerateRoute: appRoute.onGenerateRoute,
       ),
     );
   }
