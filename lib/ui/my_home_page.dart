@@ -84,7 +84,7 @@ class MyHomePage extends StatelessWidget {
     //       currentMax = currentMax +12;
     return ListView.builder(
         controller: context.read<GitUserBloc>().scrollController,
-        itemExtent: 70,
+        // itemExtent: 80,
         itemCount: context.read<GitUserBloc>().isLoadingMore
         ? items.length + 1: items.length,
         itemBuilder: (context, index){

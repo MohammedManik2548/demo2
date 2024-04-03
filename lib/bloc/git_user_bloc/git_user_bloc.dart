@@ -21,6 +21,7 @@ class GitUserBloc extends Bloc<GitUserEvent, GitUserState>{
       emit(GitUserLoadingState());
       try{
         List<Items> items = await gitUserRepository.getGitUsers();
+        items = List.generate(13, (index) => items[index]);
         emit(GitUserLoadedState(items: items));
       }catch(e){
         emit(GitUserErrorState(message: e.toString()));
