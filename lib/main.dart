@@ -21,10 +21,6 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              GitUserBloc(gitUserRepository: GitUserRepositoryImpl()),
-        ),
-        BlocProvider(
             create: (context) =>
                 DetailsBloc(detailsRepository: DetailsRepositoryImpl())),
       ],

@@ -6,9 +6,11 @@ import 'package:github_users/widget/my_drawer.dart';
 import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/git_user_bloc/git_user_bloc.dart';
 import '../bloc/git_user_bloc/git_user_event.dart';
+import '../bloc/search_bloc/search_bloc.dart';
 import '../data/model/Items.dart';
 import '../widget/error.dart';
 import '../widget/loading.dart';
+import '../widget/search.dart';
 import 'details_page.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,85 +24,87 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // setupScrollController(context);
-    return BlocProvider(
-      create: (context) => GitUserBloc(gitUserRepository: GitUserRepositoryImpl())..add(FetchGitUserEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          iconTheme: IconThemeData(
-            color: Colors.white,
+    return RepositoryProvider(
+      create: (context)=> GitUserRepository(),
+      child: BlocProvider(
+        create: (context) => GitUserBloc(context.read<GitUserRepository>())..add(FetchGitUserEvent()),
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.purple,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    showSearch(
+                        context: context,
+                        delegate: ItemSearch(
+                            searchBloc: BlocProvider.of<SearchBloc>(context)));
+                  },
+                  icon: Icon(Icons.search,color: Colors.white,),
+              ),
+            ],
+            title: Text(
+                'GitHub User',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-          title: Text(
-              'GitHub User',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        drawer: MyDrawer(),
-        body: BlocBuilder<GitUserBloc, GitUserState>(
-          builder: (context, state){
+          drawer: MyDrawer(),
+          body: BlocBuilder<GitUserBloc, GitUserState>(
+            builder: (context, state){
 
-            if(state is GitUserInitialState){
-              print('initial state');
-              return buildLoading();
-            }else if(state is GitUserLoadingState){
-              print('loading state');
-              return buildLoading();
-            }else if(state is GitUserLoadedState){
-              print('loaded state');
-              return _buildList(context,state.items);
-            }else if(state is GitUserErrorState){
-              print('error state');
-              return buildError(state.message);
-            }
-            return Container(child: Text('Manik'),);
-          },
+              if(state is GitUserInitialState){
+                print('initial state');
+                return buildLoading();
+              }else if(state is GitUserLoadingState){
+                print('loading state');
+                return buildLoading();
+              }else if(state is GitUserLoadedState){
+                print('loaded state');
+                return _buildList(context,state.items);
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
   }
 
 
-  Widget _buildList(BuildContext context,List<Items> items){
-    // items = List.generate(10, (i) => items[i]);
-    // items = List.generate(10, (index) => items[index]);
-
-    // scrollController.addListener(() {
-    //   if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
-    //     for(int i =currentMax; i<currentMax+10; i++){
-    //               items.add(items[i]);
-    //     }
-    //             currentMax = currentMax +10;
-    //     print('call');
-    //     // BlocProvider.of<GitUserBloc>(context).gitUserRepository.getGitUsers();
-    //   }else{
-    //     print("Don't call");
-    //   }
-    // });
-    // int currentMax =11;
-    //
-    //       for(int i =currentMax; i<currentMax+12; i++){
-    //         items.add(items[i]);
-    //       }
-    //       currentMax = currentMax +12;
+  Widget _buildList(BuildContext context,List items){
     return ListView.builder(
         controller: context.read<GitUserBloc>().scrollController,
-        // itemExtent: 80,
+        itemExtent: 80,
         itemCount: context.read<GitUserBloc>().isLoadingMore
-        ? items.length + 1: items.length,
+        ? items.length + 1 : items.length,
         itemBuilder: (context, index){
-          if(index > items.length){
+          if(index >= items.length){
             return buildLoading();
+          }else{
+            var item = items[index];
+            return Card(
+              child: ListTile(
+                leading: CircleAvatar(
+                  child: Text("$index"),
+                ),
+                title: Text(item['id'].toString()),
+                subtitle: Text(item['title'].toString()),
+              ),
+            );
           }
-          return InkWell(
-            onTap: (){
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
-            },
-            child: ListTile(
-              leading: Text('${index+1}'),
-              title: Text(items[index].title.toString()),
-            ),
-          );
+          // return InkWell(
+          //   onTap: (){
+          //     Navigator.push(
+          //         context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
+          //   },
+          //   child: ListTile(
+          //     leading: Text('${index+1}'),
+          //     title: Text(items[index].title.toString()),
+          //   ),
+          // );
           // if(index < items.length-1){
           //   return InkWell(
           //     onTap: (){

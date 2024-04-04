@@ -1,13 +1,10 @@
 import '../model/GitHubUserModel.dart';
 import '../model/Items.dart';
 import 'package:dio/dio.dart';
-abstract class GitUserRepository{
-  Future<List<Items>> getGitUsers();
-}
 
-class GitUserRepositoryImpl extends GitUserRepository{
-  @override
-  Future<List<Items>> getGitUsers() async{
+class GitUserRepository {
+
+  getGitUsers(int page) async{
 
     try{
 
@@ -15,7 +12,11 @@ class GitUserRepositoryImpl extends GitUserRepository{
       String url = 'https://api.github.com/search/issues';
 
       var paramData = {
-        'q':'Flutter',
+        'q':'flutter',
+        'page':'$page',
+        'per_page':'11',
+        'sort':'created',
+        'order':'desc',
       };
 
       var response = await dio.get(url,queryParameters: paramData);
@@ -23,18 +24,17 @@ class GitUserRepositoryImpl extends GitUserRepository{
       if(response.statusCode == 200){
 
         var data = response.data;
-        List<Items> users = GitHubUserModel.fromJson(data).items!;
-        print('user_lenth ${users.length}');
-        return users;
+        var list = data['items'] as List;
+        // List<Items> users = GitHubUserModel.fromJson(data).items!;
+        print('user_lenth ${list.length}');
+        return list;
 
-      }else{
-        return [];
       }
 
     }catch(e){
       print(e);
     }
-    return [];
+
   }
 
 }

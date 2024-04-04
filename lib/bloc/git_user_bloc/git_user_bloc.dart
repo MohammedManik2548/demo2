@@ -6,25 +6,25 @@ import 'package:github_users/data/model/Items.dart';
 import '../../data/repositories/git_user_repository.dart';
 
 class GitUserBloc extends Bloc<GitUserEvent, GitUserState>{
-  final GitUserRepository gitUserRepository;
+  GitUserRepository gitUserRepository;
   int page = 1;
   ScrollController scrollController = ScrollController();
   bool isLoadingMore = false;
 
-  GitUserBloc({required this.gitUserRepository}):super(GitUserLoadingState()){
+  GitUserBloc(this.gitUserRepository) : super(GitUserInitialState(null)){
 
     scrollController.addListener(() {
       add(FetchGitUserMoreEvent());
     });
 
     on<FetchGitUserEvent>((event, emit)async{
-      emit(GitUserLoadingState());
+      emit(GitUserLoadingState(null));
       try{
-        List<Items> items = await gitUserRepository.getGitUsers();
-        items = List.generate(13, (index) => items[index]);
+        var items = await gitUserRepository.getGitUsers(page);
         emit(GitUserLoadedState(items: items));
       }catch(e){
-        emit(GitUserErrorState(message: e.toString()));
+        print(e);
+        // emit(GitUserErrorState(message: e.toString()));
       }
 
     });
@@ -33,8 +33,9 @@ class GitUserBloc extends Bloc<GitUserEvent, GitUserState>{
 
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
         isLoadingMore = true;
-        List<Items> items = await gitUserRepository.getGitUsers();
-        emit(GitUserLoadedState(items: items));
+        page++;
+        var items = await gitUserRepository.getGitUsers(page);
+        emit(GitUserLoadedState(items: [...state.items, ...items]));
       }
 
     });

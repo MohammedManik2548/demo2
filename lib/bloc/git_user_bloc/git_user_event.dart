@@ -1,14 +1,6 @@
-import 'package:equatable/equatable.dart';
 
-abstract class GitUserEvent extends Equatable{}
+abstract class GitUserEvent{}
 
-class FetchGitUserEvent extends GitUserEvent{
-  @override
-  List<Object?> get props => [];
+class FetchGitUserEvent extends GitUserEvent{}
 
-}
-class FetchGitUserMoreEvent extends GitUserEvent{
-  @override
-  List<Object?> get props => [];
-
-}
+class FetchGitUserMoreEvent extends GitUserEvent{}
