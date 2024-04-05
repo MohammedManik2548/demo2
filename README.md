@@ -1,14 +1,14 @@
 # Flutter GitHub Repositories
-This Flutter application displays the most starred GitHub repositories base on the keyword "Flutter".
+This Flutter application displays the most starred GitHub repositories based on the keyword "Flutter".
 
 ## Features
- -> Fetches and displays most starred Flutter repositories from GutHub.
- -> Provides details about each repository, including the repository name, owner, description.
+ -> Fetches and displays the most starred Flutter repositories from GitHub.
+ -> Provides details about each repository, including the repository name, owner, and description.
 
 ## Getting Started
  To run this project locally, follow these steps:
  
- 1. Ensure you hove Flutter installed. if not. follow the [official installation guide] (https://flutter.dev/docs/get-started/install).
+ 1. Ensure you have Flutter installed. if not. follow the [official installation guide] (https://flutter.dev/docs/get-started/install).
  2. Clone this repository to your machine.
  3. Open the project in your preferred editor.
  4. Run 'flutter pub get' to install dependencies.
