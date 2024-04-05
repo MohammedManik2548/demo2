@@ -1,16 +1,36 @@
-# demo2
+# Flutter GitHub Repositories
+This Flutter application displays the most starred GitHub repositories base on the keyword "Flutter".
 
-A new Flutter project.
+## Features
+ -> Fetches and displays most starred Flutter repositories from GutHub.
+ -> Provides details about each repository, including the repository name, owner, description.
 
 ## Getting Started
+ To run this project locally, follow these steps:
+ 
+ 1. Ensure you hove Flutter installed. if not. follow the [official installation guide] (https://flutter.dev/docs/get-started/install).
+ 2. Clone this repository to your machine.
+ 3. Open the project in your preferred editor.
+ 4. Run 'flutter pub get' to install dependencies.
+ 5. Run 'flutter run' to launch the application on your connected device or emulator.
 
-This project is a starting point for a Flutter application.
+## Dependencies
 
-A few resources to get you started if this is your first Flutter project:
+ -> [dio] (https://pub.dev/packages/dio): For making HTTP requests to the GitHub API.
+ -> [flutter_bloc] (https://pub.dev/packages/flutter_bloc): For implementing the BLoC pattern in Flutter.
+ -> [equatable] (https://pub.dev/packages/equatable): For value equality comparison.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Folder Structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ lib/
+ |-- app_route/ # Contains App Routes
+ |-- bloc/ # Contains BLoC classes
+ |-- data/ # Contains data models and repositories
+ |-- ui/ # Contains UI components and screens
+ |-- utils/ # Contains utility functions
+ |-- widget # Contains custom widget
+ |-- main.dart # Entry point of the application
+
+## Contributors
+ ->[Md Abdul Kuddus] (https://github.com/MohammedManik2548/gitHub-repositories).
+ 

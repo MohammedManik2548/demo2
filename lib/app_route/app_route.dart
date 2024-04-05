@@ -3,19 +3,22 @@ import '../ui/details_page.dart';
 import '../ui/my_home_page.dart';
 class AppRoute{
 
-  Route? onGenerateRoute(RouteSettings routeSettings){
+  static Route<dynamic> onGenerateRoute(RouteSettings routeSettings){
     switch(routeSettings.name){
       case MyHomePage.routeName:
-        return MaterialPageRoute(
-            builder: (_) => MyHomePage(),
-        );
+        return _materialRoute(MyHomePage());
       case DetailsPage.routeName:
-        return MaterialPageRoute(
-            builder: (_) => DetailsPage(),
-        );
+        return _materialRoute(DetailsPage());
       default:
-        return null;
+        return _materialRoute(Scaffold(body: Center(child: Text('No page Found'),),));
       }
+  }
+
+  static Route _materialRoute(Widget view) {
+    return MaterialPageRoute(
+      builder: (_)=>view,
+
+    );
   }
 
 }

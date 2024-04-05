@@ -7,17 +7,12 @@ import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/git_user_bloc/git_user_bloc.dart';
 import '../bloc/git_user_bloc/git_user_event.dart';
 import '../bloc/search_bloc/search_bloc.dart';
-import '../data/model/Items.dart';
-import '../widget/error.dart';
 import '../widget/loading.dart';
 import '../widget/search.dart';
 import 'details_page.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyHomePage extends StatelessWidget {
-
-  // final scrollController = ScrollController();
-  int currentMax =10;//
 
   static const routeName = 'home_page';
 
@@ -85,43 +80,23 @@ class MyHomePage extends StatelessWidget {
             return buildLoading();
           }else{
             var item = items[index];
-            return Card(
-              child: ListTile(
-                leading: CircleAvatar(
-                  child: Text("$index"),
+            return InkWell(
+              onTap: (){
+                Navigator.push(
+
+                    context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
+              },
+              child: Card(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    child: Text("${index + 1}"),
+                  ),
+                  title: Text(item['id'].toString()),
+                  subtitle: Text(item['title'].toString()),
                 ),
-                title: Text(item['id'].toString()),
-                subtitle: Text(item['title'].toString()),
               ),
             );
           }
-          // return InkWell(
-          //   onTap: (){
-          //     Navigator.push(
-          //         context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
-          //   },
-          //   child: ListTile(
-          //     leading: Text('${index+1}'),
-          //     title: Text(items[index].title.toString()),
-          //   ),
-          // );
-          // if(index < items.length-1){
-          //   return InkWell(
-          //     onTap: (){
-          //       Navigator.push(
-          //           context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
-          //     },
-          //     child: ListTile(
-          //       leading: Text('${index+1}'),
-          //       title: Text(items[index].title.toString()),
-          //     ),
-          //   );
-          // }else{
-          //   return Center(
-          //     child: buildLoading(),
-          //   );
-          // }
-
         }
     );
   }

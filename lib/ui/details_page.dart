@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:github_users/bloc/details_page_bloc/details_page_state.dart';
 import 'package:github_users/data/repositories/details_repository.dart';
-
 import '../bloc/details_page_bloc/details_page_bloc.dart';
 import '../bloc/details_page_bloc/details_page_event.dart';
-import '../data/model/Items.dart';
-import '../data/model/gitHub_rep_model/gitGub_rep_model.dart';
 import '../utils/utils.dart';
 
 class DetailsPage extends StatelessWidget {

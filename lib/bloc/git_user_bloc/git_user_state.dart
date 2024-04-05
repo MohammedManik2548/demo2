@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
 
-import '../../data/model/Items.dart';
 
 abstract class GitUserState{
   final items;

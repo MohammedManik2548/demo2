@@ -15,6 +15,8 @@ class FetchSearchEvent extends SearchEvent{
 }
 
 class FetchSearchMoreEvent extends SearchEvent{
+  late final String query;
+  FetchSearchMoreEvent({required this.query});
   @override
   List<Object?> get props => [];
 }

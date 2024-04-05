@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/search_bloc/search_bloc.dart';
 import '../bloc/search_bloc/search_event.dart';
 import '../bloc/search_bloc/search_state.dart';
+import '../data/repositories/search_repository.dart';
+import 'loading.dart';
 
 class ItemSearch extends SearchDelegate<List>{
   late SearchBloc searchBloc;
   ItemSearch({required this.searchBloc});
   String? queryString;
-  int? page;
+  // int? page;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -54,19 +56,68 @@ class ItemSearch extends SearchDelegate<List>{
           return ListView.builder(
               controller: context.read<SearchBloc>().scrollController,
               itemExtent: 80,
-              itemCount: state.items.length,
+              itemCount: context.read<SearchBloc>().isLoadingMore
+                  ? state.items.length + 1 : state.items.length,
               itemBuilder: (context, index){
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Text("$index"),
+                if(index >= state.items.length){
+                  return buildLoading();
+                }else{
+                  var item = state.items[index];
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text("${index + 1}"),
+                      ),
+                      title: Text(item.id.toString()),
+                      subtitle: Text(item.title.toString()),
                     ),
-                    title: Text(state.items[index].id.toString()),
-                    subtitle: Text(state.items[index].title.toString()),
-                  ),
-                );
+                  );
+                }
+                // return InkWell(
+                //   onTap: (){
+                //     Navigator.push(
+                //         context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
+                //   },
+                //   child: ListTile(
+                //     leading: Text('${index+1}'),
+                //     title: Text(items[index].title.toString()),
+                //   ),
+                // );
+                // if(index < items.length-1){
+                //   return InkWell(
+                //     onTap: (){
+                //       Navigator.push(
+                //           context, MaterialPageRoute(builder: (context)=> DetailsPage(detailsBloc: BlocProvider.of<DetailsBloc>(context))));
+                //     },
+                //     child: ListTile(
+                //       leading: Text('${index+1}'),
+                //       title: Text(items[index].title.toString()),
+                //     ),
+                //   );
+                // }else{
+                //   return Center(
+                //     child: buildLoading(),
+                //   );
+                // }
+
               }
           );
+          // return ListView.builder(
+          //     controller: context.read<SearchBloc>().scrollController,
+          //     itemExtent: 80,
+          //     itemCount: state.items.length,
+          //     itemBuilder: (context, index){
+          //       return Card(
+          //         child: ListTile(
+          //           leading: CircleAvatar(
+          //             child: Text("$index"),
+          //           ),
+          //           title: Text(state.items[index].id.toString()),
+          //           subtitle: Text(state.items[index].title.toString()),
+          //         ),
+          //       );
+          //     }
+          // );
         }
         return const Scaffold();
       },

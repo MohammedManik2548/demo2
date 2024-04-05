@@ -11,17 +11,22 @@ import '../git_user_bloc/git_user_event.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState>{
   final SearchRepository searchRepository;
   int page = 1;
-  String query = 'flutter';
+  // String query = 'flutter';
   ScrollController scrollController = ScrollController();
   bool isLoadingMore = false;
 
   SearchBloc({required this.searchRepository}) : super(SearchLoading()){
+
+    scrollController.addListener(() {
+      add(FetchSearchMoreEvent(query: ''));
+    });
+
     on<FetchSearchEvent>((event, emit) async{
       emit(SearchLoading());
 
       try{
 
-        List<Items> items = await searchRepository.searchRepo(event.query);
+        List<Items> items = await searchRepository.searchRepo(event.query,page);
         emit(SearchLoaded(items: items));
 
       }catch(e, l){
@@ -31,16 +36,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState>{
 
     });
 
-    // on<FetchGitUserMoreEvent>((event, emit)async{
-    //
-    //   if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
-    //     isLoadingMore = true;
-    //     page++;
-    //     var items = await gitUserRepository.getGitUsers(page);
-    //     emit(GitUserLoadedState(items: [...state.items, ...items]));
-    //   }
-    //
-    // });
+    on<FetchSearchMoreEvent>((event, emit)async{
+
+      if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+        isLoadingMore = true;
+        page++;
+        List<Items> items = await searchRepository.searchRepo(event.query,page);
+        emit(SearchLoaded(items: [...items]));
+      }
+
+    });
 
   }
 

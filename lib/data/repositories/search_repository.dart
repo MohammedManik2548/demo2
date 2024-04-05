@@ -1,16 +1,15 @@
 
 import 'package:dio/dio.dart';
-
 import '../model/GitHubUserModel.dart';
 import '../model/Items.dart';
 
 abstract class SearchRepository{
-  Future<List<Items>> searchRepo(String query);
+  Future<List<Items>> searchRepo(String query, int page);
 }
 
 class SearchRepositoryImpl extends SearchRepository{
   @override
-  Future<List<Items>> searchRepo(String query) async{
+  Future<List<Items>> searchRepo(String query, int page) async{
 
     try{
       final dio = Dio();
@@ -18,8 +17,8 @@ class SearchRepositoryImpl extends SearchRepository{
 
       var paramData = {
         'q':'$query',
-        'page':'1',
-        'per_page':'11',
+        'page':'$page',
+        'per_page':'10',
         'sort':'created',
         'order':'desc',
       };

@@ -1,5 +1,4 @@
-import '../model/GitHubUserModel.dart';
-import '../model/Items.dart';
+
 import 'package:dio/dio.dart';
 
 class GitUserRepository {
@@ -14,7 +13,7 @@ class GitUserRepository {
       var paramData = {
         'q':'flutter',
         'page':'$page',
-        'per_page':'11',
+        'per_page':'10',
         'sort':'created',
         'order':'desc',
       };
