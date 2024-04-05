@@ -5,6 +5,14 @@ This Flutter application displays the most starred GitHub repositories based on 
  -> Fetches and displays the most starred Flutter repositories from GitHub.
  -> Provides details about each repository, including the repository name, owner, and description.
 
+## Screenshots
+![1](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/336327f6-de42-41d2-b4aa-4c56c3e82503)
+![2](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/153785bf-64f4-4784-abd8-9248763186d1)
+![3](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/0114a574-f337-45d5-ad06-0a02771d1d39)
+![4](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/9bff2594-7bed-42d2-87ec-6d65c31f18ed)
+![5](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/1bae9145-d5dc-41a8-8709-dd9ea5603842)
+
+
 ## Getting Started
  To run this project locally, follow these steps:
  
