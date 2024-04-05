@@ -5,6 +5,10 @@ This Flutter application displays the most starred GitHub repositories based on 
  -> Fetches and displays the most starred Flutter repositories from GitHub.
  -> Provides details about each repository, including the repository name, owner, and description.
 
+## Architecture
+
+The project follows the BLoC (Business Logic Component) pattern for state management and Clean Code architecture principles to maintain a clear and organized codebase.
+
 ## Screenshots
 ![1](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/336327f6-de42-41d2-b4aa-4c56c3e82503)
 ![2](https://github.com/MohammedManik2548/gitHub-repositories/assets/75543975/153785bf-64f4-4784-abd8-9248763186d1)
